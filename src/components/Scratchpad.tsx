@@ -31,7 +31,6 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
   onNotify,
 }) => {
   const { copied, copy, paste } = useClipboard();
-  // Monospace by default for developer-first experience
   const [isMono, setIsMono] = useState(true);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -67,7 +66,7 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
       onNotify('Pasted from clipboard');
     } else {
       textareaRef.current?.focus();
-      onNotify('Clipboard permission unavailable. Press Ctrl+V directly.', 'info');
+      onNotify('Tap and hold to paste directly.', 'info');
     }
   };
 
@@ -141,38 +140,38 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
   return (
     <div className="flex flex-col h-full bg-zinc-900/60 rounded-xl border border-zinc-800/80 shadow-sm overflow-hidden backdrop-blur-sm">
       {/* Scratchpad Header Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800/80 bg-zinc-900/50">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 border-b border-zinc-800/80 bg-zinc-900/50">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-200">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Live Scratchpad</span>
+            <span className="hidden xs:inline">Live </span>Scratchpad
           </div>
           <span className="text-zinc-600">•</span>
-          <span className="text-[11px] text-zinc-400 font-mono">
-            {stats.lines} {stats.lines === 1 ? 'line' : 'lines'} • {stats.words} words • {stats.chars} chars
+          <span className="text-[10px] sm:text-[11px] text-zinc-400 font-mono">
+            {stats.lines}L • {stats.words}W • {stats.chars}C
           </span>
         </div>
 
         {/* View toggles & status */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Format JSON button when JSON is detected */}
           {isJson && (
             <button
               onClick={handleFormatJson}
-              className="flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-800 hover:bg-zinc-700 text-indigo-400 text-[11px] font-mono border border-zinc-700/60 transition-colors cursor-pointer"
+              className="flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-800 hover:bg-zinc-700 text-indigo-400 text-[10px] sm:text-[11px] font-mono border border-zinc-700/60 transition-colors cursor-pointer"
               title="Prettify JSON indentation"
             >
               <Braces className="w-3 h-3" />
-              <span>Format JSON</span>
+              <span className="hidden sm:inline">Format JSON</span>
             </button>
           )}
 
           {isPublishing ? (
-            <span className="text-[11px] text-emerald-400 font-mono animate-pulse mr-1">
-              broadcasting...
+            <span className="text-[10px] sm:text-[11px] text-emerald-400 font-mono animate-pulse mr-1">
+              syncing...
             </span>
           ) : (
-            <span className="text-[11px] text-zinc-500 font-mono mr-1 hidden sm:inline">
+            <span className="text-[10px] sm:text-[11px] text-zinc-500 font-mono mr-1 hidden sm:inline">
               synced
             </span>
           )}
@@ -180,7 +179,7 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
           {/* Toggle Mono / Sans font */}
           <button
             onClick={() => setIsMono(!isMono)}
-            className={`flex items-center gap-1 px-2 py-1 rounded-md border text-xs font-mono transition-colors cursor-pointer ${
+            className={`flex items-center gap-1 p-1.5 sm:px-2 sm:py-1 rounded-md border text-xs font-mono transition-colors cursor-pointer ${
               isMono
                 ? 'bg-zinc-800 border-zinc-700 text-emerald-400'
                 : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'
@@ -201,11 +200,11 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type or paste code, links, JSON, logs, or notes here...&#10;&#10;• Supports Tab key for indentation (2 spaces)&#10;• Auto-preserves line indentation&#10;• Instant real-time sync with all your devices"
-            className={`w-full flex-1 p-4 bg-transparent resize-none border-none outline-none text-zinc-200 placeholder-zinc-600 text-sm leading-[1.7] whitespace-pre-wrap break-words min-h-[240px] lg:min-h-[400px] ${
+            placeholder="Type or paste code, links, JSON, logs, or notes here...&#10;&#10;• Instant real-time sync with all your devices&#10;• Supports Tab key for indentation"
+            className={`w-full flex-1 p-3 sm:p-4 bg-transparent resize-none border-none outline-none text-zinc-200 placeholder-zinc-600 leading-[1.65] sm:leading-[1.7] whitespace-pre-wrap break-words min-h-[220px] sm:min-h-[280px] lg:min-h-[400px] ${
               isMono 
-                ? 'font-mono text-[13.5px] tracking-normal font-normal' 
-                : 'font-sans text-sm tracking-normal'
+                ? 'font-mono text-[16px] sm:text-[13.5px] tracking-normal font-normal' 
+                : 'font-sans text-[16px] sm:text-sm tracking-normal'
             }`}
             spellCheck={false}
           />
@@ -213,15 +212,15 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
       </div>
 
       {/* Action Footer Bar */}
-      <div className="flex items-center justify-between px-3.5 py-2.5 border-t border-zinc-800/80 bg-zinc-950/40 gap-2 flex-wrap">
+      <div className="flex items-center justify-between px-3 sm:px-3.5 py-2 sm:py-2.5 border-t border-zinc-800/80 bg-zinc-950/40 gap-1.5 sm:gap-2 flex-wrap">
         <div className="flex items-center gap-1.5">
           {/* Copy Button */}
           <button
             onClick={handleCopy}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 sm:py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer min-h-[34px] ${
               copied
                 ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                : 'bg-zinc-800 hover:bg-zinc-700/80 text-zinc-200 border border-zinc-700/60 shadow-sm'
+                : 'bg-zinc-800 hover:bg-zinc-700/80 active:bg-zinc-700 text-zinc-200 border border-zinc-700/60 shadow-sm'
             }`}
           >
             {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -231,11 +230,11 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
           {/* Paste Button */}
           <button
             onClick={handlePaste}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-300 hover:text-zinc-100 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-300 hover:text-zinc-100 active:bg-zinc-800 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 transition-colors cursor-pointer min-h-[34px]"
             title="Paste from system clipboard"
           >
             <ClipboardPaste className="w-3.5 h-3.5 text-zinc-400" />
-            <span className="hidden sm:inline">Paste</span>
+            <span>Paste</span>
           </button>
         </div>
 
@@ -244,11 +243,11 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
           <button
             onClick={handleSaveToCard}
             disabled={!value.trim()}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:pointer-events-none text-zinc-200 border border-zinc-700/60 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-700 disabled:opacity-40 disabled:pointer-events-none text-zinc-200 border border-zinc-700/60 transition-colors cursor-pointer min-h-[34px]"
             title="Convert current scratchpad text into a permanent card"
           >
             <ArrowDownToLine className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Save as Card</span>
+            <span>Save Card</span>
           </button>
 
           {/* Clear Button */}
@@ -260,7 +259,7 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
               }
             }}
             disabled={!value}
-            className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-950/30 border border-transparent hover:border-red-900/50 transition-colors disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+            className="p-2 sm:p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-950/30 active:bg-red-950/50 border border-transparent hover:border-red-900/50 transition-colors disabled:opacity-30 disabled:pointer-events-none cursor-pointer min-h-[34px] min-w-[34px] flex items-center justify-center"
             title="Clear scratchpad"
           >
             <Trash2 className="w-3.5 h-3.5" />

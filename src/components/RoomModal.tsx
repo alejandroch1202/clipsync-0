@@ -55,9 +55,9 @@ export const RoomModal: React.FC<RoomModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-150">
       <div 
-        className="w-full max-w-md rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl p-5 text-zinc-100 animate-in zoom-in-95 duration-150"
+        className="w-full max-w-md max-h-[92vh] overflow-y-auto rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl p-4 sm:p-5 text-zinc-100 animate-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -95,8 +95,7 @@ export const RoomModal: React.FC<RoomModalProps> = ({
                   value={inputRoom}
                   onChange={(e) => setInputRoom(e.target.value)}
                   placeholder="e.g. swift-falcon-42"
-                  className="w-full pl-7 pr-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/30 font-mono"
-                  autoFocus
+                  className="w-full pl-7 pr-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-base sm:text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/30 font-mono"
                 />
               </div>
 

@@ -84,8 +84,8 @@ export const CardList: React.FC<CardListProps> = ({
   return (
     <div className="flex flex-col h-full bg-zinc-900/60 rounded-xl border border-zinc-800/80 shadow-sm overflow-hidden backdrop-blur-sm">
       {/* Header & Quick Input */}
-      <div className="p-3.5 border-b border-zinc-800/80 bg-zinc-900/40">
-        <div className="flex items-center justify-between mb-2.5">
+      <div className="p-3 sm:p-3.5 border-b border-zinc-800/80 bg-zinc-900/40">
+        <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-200">
             <Layers className="w-3.5 h-3.5 text-indigo-400" />
             <span>Saved Cards & Snippets</span>
@@ -96,14 +96,14 @@ export const CardList: React.FC<CardListProps> = ({
         </div>
 
         {/* Input box */}
-        <div className="relative rounded-lg border border-zinc-800 bg-zinc-950/80 focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/30 transition-all p-2">
+        <div className="relative rounded-lg border border-zinc-800 bg-zinc-950/80 focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/30 transition-all p-2 sm:p-2.5">
           <textarea
             value={newContent}
             onChange={(e) => setNewContent(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Quick note, link, snippet, or API key... (Cmd + Enter to post)"
             rows={2}
-            className="w-full bg-transparent resize-none border-none outline-none text-zinc-100 placeholder-zinc-600 font-mono text-xs sm:text-[13px] leading-relaxed"
+            className="w-full bg-transparent resize-none border-none outline-none text-zinc-100 placeholder-zinc-600 font-mono text-[16px] sm:text-[13px] leading-relaxed"
           />
           <div className="flex items-center justify-between pt-1.5 border-t border-zinc-900 text-xs">
             <span className="text-[10px] text-zinc-500 hidden sm:inline">
@@ -112,7 +112,7 @@ export const CardList: React.FC<CardListProps> = ({
             <button
               onClick={handleAdd}
               disabled={!newContent.trim()}
-              className="ml-auto flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:pointer-events-none text-white text-xs font-medium transition-colors cursor-pointer"
+              className="ml-auto flex items-center gap-1 px-3 py-1.5 rounded-md bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 disabled:opacity-40 disabled:pointer-events-none text-white text-xs font-medium transition-colors cursor-pointer min-h-[30px]"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add Card</span>
@@ -157,7 +157,7 @@ export const CardList: React.FC<CardListProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search..."
-              className="pl-6 pr-2 py-0.8 rounded-md bg-zinc-900 border border-zinc-800 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-700 w-24 sm:w-32 focus:w-40 transition-all"
+              className="pl-6 pr-2 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-[16px] sm:text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-700 w-24 sm:w-32 focus:w-36 transition-all"
             />
           </div>
 
@@ -169,7 +169,7 @@ export const CardList: React.FC<CardListProps> = ({
                   onNotify('All cards cleared');
                 }
               }}
-              className="p-1 rounded-md text-zinc-500 hover:text-red-400 hover:bg-red-950/30 transition-colors cursor-pointer"
+              className="p-1.5 rounded-md text-zinc-500 hover:text-red-400 hover:bg-red-950/30 transition-colors cursor-pointer"
               title="Delete all cards"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -179,7 +179,7 @@ export const CardList: React.FC<CardListProps> = ({
       </div>
 
       {/* Cards Scrollable Container */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-2.5 min-h-[220px]">
+      <div className="flex-1 overflow-y-auto p-2.5 sm:p-3 space-y-2.5 min-h-[220px]">
         {filteredCards.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 text-zinc-500">
             <FileText className="w-8 h-8 text-zinc-700 mb-2 stroke-1" />

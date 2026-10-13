@@ -50,7 +50,7 @@ export const CardItem: React.FC<CardItemProps> = ({
 
   return (
     <div
-      className={`group relative rounded-xl border transition-all duration-150 p-3.5 flex flex-col justify-between ${
+      className={`group relative rounded-xl border transition-all duration-150 p-3 sm:p-3.5 flex flex-col justify-between ${
         card.pinned
           ? 'bg-zinc-900/90 border-emerald-500/40 shadow-sm shadow-emerald-950/20'
           : 'bg-zinc-900/50 border-zinc-800/80 hover:border-zinc-700/80 hover:bg-zinc-900/80'
@@ -70,14 +70,14 @@ export const CardItem: React.FC<CardItemProps> = ({
           )}
         </div>
 
-        {/* Action icons */}
-        <div className="flex items-center gap-1 opacity-80 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* Action icons - always visible on mobile, reveal on hover on desktop */}
+        <div className="flex items-center gap-0.5 sm:gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
           <button
             onClick={() => onTogglePin(card.id)}
-            className={`p-1 rounded-md text-xs transition-colors cursor-pointer ${
+            className={`p-1.5 sm:p-1 rounded-md text-xs transition-colors cursor-pointer min-w-[28px] min-h-[28px] flex items-center justify-center ${
               card.pinned
                 ? 'text-emerald-400 hover:bg-emerald-950/40'
-                : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'
+                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'
             }`}
             title={card.pinned ? 'Unpin card' : 'Pin card to top'}
           >
@@ -86,7 +86,7 @@ export const CardItem: React.FC<CardItemProps> = ({
 
           <button
             onClick={handleCopy}
-            className="p-1 rounded-md text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors cursor-pointer"
+            className="p-1.5 sm:p-1 rounded-md text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors cursor-pointer min-w-[28px] min-h-[28px] flex items-center justify-center"
             title="Copy content"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -94,7 +94,7 @@ export const CardItem: React.FC<CardItemProps> = ({
 
           <button
             onClick={() => onDelete(card.id)}
-            className="p-1 rounded-md text-zinc-500 hover:text-red-400 hover:bg-red-950/30 transition-colors cursor-pointer"
+            className="p-1.5 sm:p-1 rounded-md text-zinc-400 hover:text-red-400 hover:bg-red-950/30 transition-colors cursor-pointer min-w-[28px] min-h-[28px] flex items-center justify-center"
             title="Delete card"
           >
             <Trash2 className="w-3.5 h-3.5" />
@@ -117,7 +117,7 @@ export const CardItem: React.FC<CardItemProps> = ({
       <div className="pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] text-zinc-500">
         <button
           onClick={handleSendToScratchpad}
-          className="flex items-center gap-1 hover:text-zinc-300 transition-colors cursor-pointer"
+          className="flex items-center gap-1 hover:text-zinc-300 py-1 transition-colors cursor-pointer"
           title="Append to scratchpad"
         >
           <ArrowUpToLine className="w-3 h-3 text-indigo-400" />
@@ -126,7 +126,7 @@ export const CardItem: React.FC<CardItemProps> = ({
 
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1 hover:text-zinc-300 transition-colors cursor-pointer"
+          className="flex items-center gap-1 hover:text-zinc-300 py-1 transition-colors cursor-pointer"
         >
           {copied ? (
             <span className="text-emerald-400 font-medium">Copied!</span>

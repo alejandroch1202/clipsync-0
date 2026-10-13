@@ -62,9 +62,9 @@ export const BrokerSettingsModal: React.FC<BrokerSettingsModalProps> = ({
   const topic = getRoomTopic(currentRoom);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-150">
       <div 
-        className="w-full max-w-md rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl p-5 text-zinc-100 animate-in zoom-in-95 duration-150"
+        className="w-full max-w-md max-h-[92vh] overflow-y-auto rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl p-4 sm:p-5 text-zinc-100 animate-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -154,8 +154,7 @@ export const BrokerSettingsModal: React.FC<BrokerSettingsModalProps> = ({
                 value={customUrl}
                 onChange={(e) => setCustomUrl(e.target.value)}
                 placeholder="wss://your-broker-domain:8084/mqtt"
-                className="w-full px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs font-mono text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-indigo-500"
-                autoFocus
+                className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-base sm:text-xs font-mono text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-indigo-500"
               />
               <div className="flex gap-2">
                 <button

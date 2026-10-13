@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Sparkles, Layers } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { Scratchpad } from './components/Scratchpad';
 import { CardList } from './components/CardList';
@@ -42,6 +43,9 @@ export default function App() {
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [isBrokerModalOpen, setIsBrokerModalOpen] = useState(false);
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
+
+  // Mobile navigation tab ('scratchpad' | 'cards')
+  const [mobileTab, setMobileTab] = useState<'scratchpad' | 'cards'>('scratchpad');
 
   // Toast notifications
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -133,6 +137,8 @@ export default function App() {
     } else {
       updateScratchpad(`${scratchpad}\n\n${text}`);
     }
+    // Switch to scratchpad view on mobile so user immediately sees inserted text
+    setMobileTab('scratchpad');
   };
 
   return (
@@ -151,11 +157,41 @@ export default function App() {
       />
 
       {/* Main Workspace */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-5 flex flex-col">
-        {/* Workspace Grid */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch min-h-0">
-          {/* Left Column: Live Scratchpad (7 cols on desktop) */}
-          <section className="lg:col-span-7 flex flex-col h-full min-h-[380px] lg:min-h-[560px]">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-6 py-3 sm:py-5 flex flex-col">
+        {/* Mobile Segmented View Switcher (Visible on mobile < lg, hidden on desktop lg+) */}
+        <div className="flex lg:hidden items-center p-1 rounded-xl bg-zinc-900 border border-zinc-800/80 mb-3 text-xs font-medium">
+          <button
+            onClick={() => setMobileTab('scratchpad')}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all cursor-pointer ${
+              mobileTab === 'scratchpad'
+                ? 'bg-zinc-800 text-zinc-100 shadow-sm border border-zinc-700/60'
+                : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Scratchpad</span>
+          </button>
+          <button
+            onClick={() => setMobileTab('cards')}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all cursor-pointer ${
+              mobileTab === 'cards'
+                ? 'bg-zinc-800 text-zinc-100 shadow-sm border border-zinc-700/60'
+                : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Saved Cards ({cards.length})</span>
+          </button>
+        </div>
+
+        {/* Workspace Grid / Panels */}
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-stretch min-h-0">
+          {/* Scratchpad Column: visible on desktop, or when mobileTab === 'scratchpad' */}
+          <section
+            className={`${
+              mobileTab === 'scratchpad' ? 'flex' : 'hidden'
+            } lg:flex lg:col-span-7 flex-col h-full min-h-[340px] sm:min-h-[420px] lg:min-h-[560px]`}
+          >
             <Scratchpad
               value={scratchpad}
               onChange={updateScratchpad}
@@ -166,8 +202,12 @@ export default function App() {
             />
           </section>
 
-          {/* Right Column: Cards & Snippets (5 cols on desktop) */}
-          <section className="lg:col-span-5 flex flex-col h-full min-h-[380px] lg:min-h-[560px]">
+          {/* Cards Column: visible on desktop, or when mobileTab === 'cards' */}
+          <section
+            className={`${
+              mobileTab === 'cards' ? 'flex' : 'hidden'
+            } lg:flex lg:col-span-5 flex-col h-full min-h-[340px] sm:min-h-[420px] lg:min-h-[560px]`}
+          >
             <CardList
               cards={cards}
               onAddCard={addCard}
@@ -181,8 +221,8 @@ export default function App() {
         </div>
       </main>
 
-      {/* Subtle Footer */}
-      <footer className="border-t border-zinc-800/60 py-3 px-4 sm:px-6 bg-zinc-950/60 text-center">
+      {/* Subtle Footer with safe area padding */}
+      <footer className="border-t border-zinc-800/60 py-3 px-4 sm:px-6 bg-zinc-950/60 text-center pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
         <p className="text-[11px] text-zinc-500">
           <span className="font-semibold text-zinc-400">ClipSync</span> • Zero-auth, static-first cross-device clipboard sync via MQTT (Retain + QoS 1).
           <span className="hidden sm:inline"> Instant & private across devices.</span>

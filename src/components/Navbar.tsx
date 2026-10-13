@@ -76,40 +76,40 @@ export const Navbar: React.FC<NavbarProps> = ({
   }[connectionStatus];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
-        {/* Brand */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 group cursor-pointer" onClick={onOpenRoomModal}>
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500/20 to-indigo-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400/50 transition-colors">
-              <Zap className="w-4 h-4 fill-emerald-400/20" />
+    <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-zinc-950/85 backdrop-blur-md pt-[env(safe-area-inset-top)]">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-14 flex items-center justify-between gap-2 sm:gap-4">
+        {/* Brand & Room */}
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 group cursor-pointer shrink-0" onClick={onOpenRoomModal}>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-emerald-500/20 to-indigo-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400/50 transition-colors">
+              <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-emerald-400/20" />
             </div>
-            <span className="font-semibold text-sm tracking-tight text-zinc-100 flex items-center gap-1.5">
+            <span className="font-semibold text-xs sm:text-sm tracking-tight text-zinc-100 flex items-center gap-1.5">
               ClipSync
-              <span className="text-[10px] font-mono font-normal px-1.5 py-0.2 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
+              <span className="hidden sm:inline text-[10px] font-mono font-normal px-1.5 py-0.2 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">
                 MQTT
               </span>
             </span>
           </div>
 
-          <div className="hidden sm:block h-4 w-[1px] bg-zinc-800" />
+          <div className="hidden sm:block h-4 w-[1px] bg-zinc-800 shrink-0" />
 
           {/* Room Pill Selector */}
           <div 
             onClick={onOpenRoomModal}
-            className="flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/70 cursor-pointer transition-all text-xs group"
+            className="flex items-center gap-1 sm:gap-1.5 pl-2 sm:pl-2.5 pr-1 sm:pr-1.5 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/70 cursor-pointer transition-all text-xs group min-w-0"
             title="Click to change or generate new room"
           >
             <span className="text-zinc-500 group-hover:text-zinc-400">#</span>
-            <span className="font-mono text-zinc-200 font-medium max-w-[140px] truncate sm:max-w-none">
+            <span className="font-mono text-zinc-200 font-medium max-w-[90px] sm:max-w-[140px] md:max-w-none truncate">
               {room}
             </span>
-            <ChevronDown className="w-3.5 h-3.5 text-zinc-500 group-hover:text-zinc-300" />
+            <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-zinc-500 group-hover:text-zinc-300 shrink-0" />
 
             {/* Quick copy link icon */}
             <button
               onClick={handleCopyLink}
-              className="ml-1 p-1 rounded-full hover:bg-zinc-700/60 text-zinc-400 hover:text-zinc-200 transition-colors"
+              className="p-1 rounded-full hover:bg-zinc-700/60 text-zinc-400 hover:text-zinc-200 transition-colors shrink-0"
               title="Copy room link"
             >
               {copiedLink ? (
@@ -122,14 +122,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Right Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Connection & Broker Status Pill */}
           <button
             onClick={onOpenBrokerModal}
-            className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-zinc-900/80 border border-zinc-800/80 hover:border-zinc-700 text-xs text-zinc-300 hover:text-zinc-100 transition-colors"
+            className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-full bg-zinc-900/80 border border-zinc-800/80 hover:border-zinc-700 text-xs text-zinc-300 hover:text-zinc-100 transition-colors"
             title="Click to view broker diagnostics or switch server"
           >
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex h-2 w-2 shrink-0">
               {connectionStatus === 'connected' && (
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               )}
@@ -141,7 +141,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {isPublishing ? (
               <span className="text-[11px] text-emerald-400 animate-pulse font-medium">Syncing...</span>
             ) : (
-              <span className={`text-[11px] font-medium ${statusConfig.textColor}`}>
+              <span className={`text-[11px] font-medium hidden sm:inline ${statusConfig.textColor}`}>
                 {statusConfig.text}
               </span>
             )}
@@ -150,17 +150,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* QR Code Action Button */}
           <button
             onClick={onOpenQrModal}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-900/80 border border-zinc-800/80 hover:border-zinc-700 text-zinc-300 hover:text-zinc-100 text-xs transition-colors cursor-pointer"
-            title="Share with Phone (QR Code)"
+            className="flex items-center gap-1 p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-zinc-900/80 border border-zinc-800/80 hover:border-zinc-700 text-zinc-300 hover:text-zinc-100 text-xs transition-colors cursor-pointer"
+            title="Share with Phone / Other Devices (QR Code)"
           >
             <QrCode className="w-3.5 h-3.5 text-zinc-400" />
-            <span className="hidden sm:inline">Mobile QR</span>
+            <span className="hidden sm:inline">QR</span>
           </button>
 
-          {/* Keyboard Shortcuts Button */}
+          {/* Keyboard Shortcuts Button (Desktop only) */}
           <button
             onClick={onOpenShortcutsModal}
-            className="p-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800/80 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+            className="hidden sm:flex p-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800/80 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
             title="Keyboard shortcuts (Cmd+K)"
           >
             <Command className="w-3.5 h-3.5" />
