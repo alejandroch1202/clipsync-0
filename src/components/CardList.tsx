@@ -44,6 +44,16 @@ export const CardList: React.FC<CardListProps> = ({
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
       e.preventDefault();
       handleAdd();
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      const textarea = e.currentTarget;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const newValue = newContent.substring(0, start) + '  ' + newContent.substring(end);
+      setNewContent(newValue);
+      requestAnimationFrame(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + 2;
+      });
     }
   };
 
@@ -93,7 +103,7 @@ export const CardList: React.FC<CardListProps> = ({
             onKeyDown={handleKeyDown}
             placeholder="Quick note, link, snippet, or API key... (Cmd + Enter to post)"
             rows={2}
-            className="w-full bg-transparent resize-none border-none outline-none text-zinc-100 placeholder-zinc-600 text-xs sm:text-sm leading-relaxed"
+            className="w-full bg-transparent resize-none border-none outline-none text-zinc-100 placeholder-zinc-600 font-mono text-xs sm:text-[13px] leading-relaxed"
           />
           <div className="flex items-center justify-between pt-1.5 border-t border-zinc-900 text-xs">
             <span className="text-[10px] text-zinc-500 hidden sm:inline">

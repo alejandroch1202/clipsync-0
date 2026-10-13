@@ -13,6 +13,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Developer code typography & tab sizing */
+textarea, pre, code {
+  tab-size: 2;
+  -moz-tab-size: 2;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* Custom code selection styling */
+::selection {
+  background-color: rgba(16, 185, 129, 0.28); /* emerald-500 */
+  color: #f4f4f5;
+}
+
 /* Custom subtle scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
